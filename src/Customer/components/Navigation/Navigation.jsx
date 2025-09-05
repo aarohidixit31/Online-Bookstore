@@ -66,7 +66,7 @@ const navigation = {
             { name: "Non-Fiction", href: "#" },
             { name: "Comics & Graphic Novels", href: "#" },
             { name: "Art & Photography", href: "#" },
-            { name: "Browse All", href: "#" },
+            { name: "Browse All", href: "" },
           ],
         },
       ],

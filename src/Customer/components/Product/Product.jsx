@@ -343,7 +343,7 @@ const Product = () => {
         <BookFilterSidebar filters={filters} setFilters={setFilters} />
       </div>
       <div className="flex-1 p-4 lg:p-10 flex flex-col min-h-screen">
-        <h1 className="text-3xl font-bold mb-6 text-primary">Books</h1>
+        <h1 className="text-3xl font-bold mb-6 text-primary">Browse All Books</h1>
         <div className="flex flex-wrap">
           {paginatedBooks.length > 0 ? (
             paginatedBooks.map(book => (
