@@ -21,13 +21,13 @@ export const academicBooks = [
     title: "The Skillful Teacher",
     author: "Stephen D. Brookfield",
     year: 2006,
-    cover: "https://covers.openlibrary.org/b/isbn/9780787961983-L.jpg"
+    cover: "https://m.media-amazon.com/images/I/5139oZems9L._UF1000,1000_QL80_.jpg"
   },
   {
     title: "The Courage to Teach",
     author: "Parker J. Palmer",
     year: 1998,
-    cover: "https://covers.openlibrary.org/b/isbn/9780787996862-L.jpg"
+    cover: "https://m.media-amazon.com/images/I/91vNtcEqHHL._UF1000,1000_QL80_.jpg"
   },
   {
     title: "Teaching to Transgress",

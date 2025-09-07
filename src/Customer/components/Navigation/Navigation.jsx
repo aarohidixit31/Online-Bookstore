@@ -21,6 +21,7 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 const navigation = {
   categories: [
@@ -117,7 +118,7 @@ const navigation = {
 
 export default function Navigations() {
   const [open, setOpen] = useState(false);
-
+  const navigate = useNavigate();
   return (
     <div className="bg-white">
       {/* Mobile menu */}
