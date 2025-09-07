@@ -21,7 +21,7 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const navigation = {
   categories: [
@@ -31,28 +31,26 @@ const navigation = {
       featured: [
         {
           name: "Fiction",
-          href: "#",
-          imageSrc:
-            "https://images.unsplash.com/photo-1512820790803-83ca734da794",
+          href: "/products?genre=Fiction",
+          imageSrc: "https://images.unsplash.com/photo-1512820790803-83ca734da794",
           imageAlt: "Best fiction books stack.",
         },
         {
           name: "Non-Fiction",
-          href: "#",
-          imageSrc:
-            "https://images.unsplash.com/photo-1464983953574-0892a716854b",
+          href: "/products?genre=Non-Fiction",
+          imageSrc: "https://images.unsplash.com/photo-1464983953574-0892a716854b",
           imageAlt: "Award-winning non-fiction books",
         },
         {
           name: "Comics & Graphic Novels",
-          href: "#",
+          href: "/products?genre=Comics%20&%20Graphic%20Novels",
           imageSrc:
             "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=400&q=80",
           imageAlt: "Stack of comic books",
         },
         {
           name: "Art & Photography",
-          href: "#",
+          href: "/products?genre=Art%20&%20Photography",
           imageSrc:
             "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
           imageAlt: "Artistic photos and camera on a table",
@@ -63,11 +61,11 @@ const navigation = {
           id: "genres-section",
           name: "Genres",
           items: [
-            { name: "Fiction", href: "#" },
-            { name: "Non-Fiction", href: "#" },
-            { name: "Comics & Graphic Novels", href: "#" },
-            { name: "Art & Photography", href: "#" },
-            { name: "Browse All", href: "" },
+            { name: "Fiction", href: "/products?genre=Fiction" },
+            { name: "Non-Fiction", href: "/products?genre=Non-Fiction" },
+            { name: "Comics & Graphic Novels", href: "/products?genre=Comics%20&%20Graphic%20Novels" },
+            { name: "Art & Photography", href: "/products?genre=Art%20&%20Photography" },
+            { name: "Browse All", href: "/products" },
           ],
         },
       ],
@@ -77,24 +75,21 @@ const navigation = {
       name: "Learning",
       featured: [
         {
-          name: "Academic / Education",
-          href: "#",
-          imageSrc:
-            "https://images.unsplash.com/photo-1513258496099-48168024aec0",
+          name: "Academic",
+          href: "/products?genre=Academic",
+          imageSrc: "https://images.unsplash.com/photo-1513258496099-48168024aec0",
           imageAlt: "Teaching and educational books",
         },
         {
-          name: "Religious/Spiritual",
-          href: "#",
-          imageSrc:
-            "https://images.unsplash.com/photo-1457369804613-52c61a468e7d",
+          name: "Religion/Spiritual",
+          href: "/products?genre=Religion%2FSpiritual",
+          imageSrc: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d",
           imageAlt: "Spiritual and religious books",
         },
         {
           name: "Adult Coloring Books",
-          href: "#",
-          imageSrc:
-            "https://images.unsplash.com/photo-1465101046530-73398c7f28ca",
+          href: "/products?genre=Adult%20Coloring%20Books",
+          imageSrc: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca",
           imageAlt: "Adult coloring books",
         },
       ],
@@ -103,22 +98,24 @@ const navigation = {
           id: "learning-section",
           name: "Learning & Inspiration",
           items: [
-            { name: "Academic", href: "#" },
-            { name: "Education", href: "#" },
-            { name: "Religious/Spiritual", href: "#" },
-            { name: "Adult Coloring Books", href: "#" },
-            { name: "Browse All", href: "#" },
+            { name: "Academic", href: "/products?genre=Academic" },
+            { name: "Religion/Spiritual", href: "/products?genre=Religion%2FSpiritual" },
+            { name: "Adult Coloring Books", href: "/products?genre=Adult%20Coloring%20Books" },
+            { name: "Browse All", href: "/products" },
           ],
         },
       ],
     },
   ],
-  pages: [{ name: "About Us", href: "#" }],
+  pages: [
+    { name: "Orders", href: "/orders" },
+    { name: "About Us", href: "/about" },
+  ],
 };
 
 export default function Navigations() {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
+
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -172,16 +169,17 @@ export default function Navigations() {
                             src={item.imageSrc}
                             className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
                           />
-                          <a
-                            href={item.href}
+                          <Link
+                            to={item.href}
                             className="mt-6 block font-medium text-gray-900"
+                            onClick={() => setOpen(false)}
                           >
                             <span
                               aria-hidden="true"
                               className="absolute inset-0 z-10"
                             />
                             {item.name}
-                          </a>
+                          </Link>
                           <p aria-hidden="true" className="mt-1">
                             Shop now
                           </p>
@@ -203,12 +201,13 @@ export default function Navigations() {
                         >
                           {section.items.map((item) => (
                             <li key={item.name} className="flow-root">
-                              <a
-                                href={item.href}
+                              <Link
+                                to={item.href}
                                 className="-m-2 block p-2 text-gray-500"
+                                onClick={() => setOpen(false)}
                               >
                                 {item.name}
-                              </a>
+                              </Link>
                             </li>
                           ))}
                         </ul>
@@ -222,55 +221,44 @@ export default function Navigations() {
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {navigation.pages.map((page) => (
                 <div key={page.name} className="flow-root">
-                  <a
-                    href={page.href}
+                  <Link
+                    to={page.href}
                     className="-m-2 block p-2 font-medium text-gray-900"
+                    onClick={() => setOpen(false)}
                   >
                     {page.name}
-                  </a>
+                  </Link>
                 </div>
               ))}
             </div>
 
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               <div className="flow-root">
-                <a
-                  href="#"
+                <Link
+                  to="/login"
                   className="-m-2 block p-2 font-medium text-gray-900"
+                  onClick={() => setOpen(false)}
                 >
                   Sign in
-                </a>
+                </Link>
               </div>
               <div className="flow-root">
-                <a
-                  href="#"
+                <Link
+                  to="/signup"
                   className="-m-2 block p-2 font-medium text-gray-900"
+                  onClick={() => setOpen(false)}
                 >
                   Create account
-                </a>
+                </Link>
               </div>
             </div>
-
-            {/* <div className="border-t border-gray-200 px-4 py-6">
-              <a href="#" className="-m-2 flex items-center p-2">
-                <img
-                  alt=""
-                  src="https://tailwindcss.com/plus-assets/img/flags/flag-canada.svg"
-                  className="block h-auto w-5 shrink-0"
-                />
-                <span className="ml-3 block text-base font-medium text-gray-900">
-                  CAD
-                </span>
-                <span className="sr-only">, change currency</span>
-              </a>
-            </div> */}
           </DialogPanel>
         </div>
       </Dialog>
 
-      <header className="relative bg-white">
+      <header className="sticky top-0 z-50 bg-white shadow">
         <p className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-          Get free delivery on orders over $100
+          Get free delivery on orders over ₹1000
         </p>
 
         <nav
@@ -291,14 +279,14 @@ export default function Navigations() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
-                  <span className="sr-only">Your Company</span>
+                <Link to="/">
+                  <span className="sr-only">Online Bookstore</span>
                   <img
-                    alt=""
+                    alt="Bookstore Logo"
                     src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                     className="h-8 w-auto"
                   />
-                </a>
+                </Link>
               </div>
 
               {/* Flyout menus */}
@@ -306,133 +294,139 @@ export default function Navigations() {
                 <div className="flex h-full space-x-8">
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
-                      <div className="relative flex">
-                        <PopoverButton className="group relative flex items-center justify-center text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-open:text-indigo-600">
-                          {category.name}
-                          <span
-                            aria-hidden="true"
-                            className="absolute inset-x-0 -bottom-px z-30 h-0.5 transition duration-200 ease-out group-data-open:bg-indigo-600"
-                          />
-                        </PopoverButton>
-                      </div>
-                      <PopoverPanel
-                        transition
-                        className="absolute inset-x-0 top-full z-20 w-full bg-white text-sm text-gray-500 transition data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
-                      >
-                        {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
-                        <div
-                          aria-hidden="true"
-                          className="absolute inset-0 top-1/2 bg-white shadow-sm"
-                        />
-                        <div className="relative bg-white">
-                          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                            <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
-                              <div className="col-start-2 grid grid-cols-2 gap-x-8">
-                                {category.featured.map((item) => (
-                                  <div
-                                    key={item.name}
-                                    className="group relative text-base sm:text-sm"
-                                  >
-                                    <img
-                                      alt={item.imageAlt}
-                                      src={item.imageSrc}
-                                      className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
-                                    />
-                                    <a
-                                      href={item.href}
-                                      className="mt-6 block font-medium text-gray-900"
-                                    >
-                                      <span
-                                        aria-hidden="true"
-                                        className="absolute inset-0 z-10"
-                                      />
-                                      {item.name}
-                                    </a>
-                                    <p aria-hidden="true" className="mt-1">
-                                      Shop now
-                                    </p>
+                      {({ close }) => (
+                        <>
+                          <div className="relative flex">
+                            <PopoverButton className="group relative flex items-center justify-center text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-open:text-indigo-600">
+                              {category.name}
+                              <span
+                                aria-hidden="true"
+                                className="absolute inset-x-0 -bottom-px z-30 h-0.5 transition duration-200 ease-out group-data-open:bg-indigo-600"
+                              />
+                            </PopoverButton>
+                          </div>
+                          <PopoverPanel
+                            transition
+                            className="absolute inset-x-0 top-full z-20 w-full bg-white text-sm text-gray-500 transition data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
+                          >
+                            <div
+                              aria-hidden="true"
+                              className="absolute inset-0 top-1/2 bg-white shadow-sm"
+                            />
+                            <div className="relative bg-white">
+                              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                                <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
+                                  <div className="col-start-2 grid grid-cols-2 gap-x-8">
+                                    {category.featured.map((item) => (
+                                      <div
+                                        key={item.name}
+                                        className="group relative text-base sm:text-sm"
+                                      >
+                                        <img
+                                          alt={item.imageAlt}
+                                          src={item.imageSrc}
+                                          className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
+                                        />
+                                        <Link
+                                          to={item.href}
+                                          className="mt-6 block font-medium text-gray-900"
+                                          onClick={close}
+                                        >
+                                          <span
+                                            aria-hidden="true"
+                                            className="absolute inset-0 z-10"
+                                          />
+                                          {item.name}
+                                        </Link>
+                                        <p aria-hidden="true" className="mt-1">
+                                          Shop now
+                                        </p>
+                                      </div>
+                                    ))}
                                   </div>
-                                ))}
-                              </div>
-                              <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
-                                {category.sections.map((section) => (
-                                  <div key={section.name}>
-                                    <p
-                                      id={`${section.name}-heading`}
-                                      className="font-medium text-gray-900"
-                                    >
-                                      {section.name}
-                                    </p>
-                                    <ul
-                                      role="list"
-                                      aria-labelledby={`${section.name}-heading`}
-                                      className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                    >
-                                      {section.items.map((item) => (
-                                        <li key={item.name} className="flex">
-                                          <a
-                                            href={item.href}
-                                            className="hover:text-gray-800"
-                                          >
-                                            {item.name}
-                                          </a>
-                                        </li>
-                                      ))}
-                                    </ul>
+                                  <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
+                                    {category.sections.map((section) => (
+                                      <div key={section.name}>
+                                        <p
+                                          id={`${section.name}-heading`}
+                                          className="font-medium text-gray-900"
+                                        >
+                                          {section.name}
+                                        </p>
+                                        <ul
+                                          role="list"
+                                          aria-labelledby={`${section.name}-heading`}
+                                          className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
+                                        >
+                                          {section.items.map((item) => (
+                                            <li key={item.name} className="flex">
+                                              <Link
+                                                to={item.href}
+                                                className="hover:text-gray-800"
+                                                onClick={close}
+                                              >
+                                                {item.name}
+                                              </Link>
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </div>
+                                    ))}
                                   </div>
-                                ))}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      </PopoverPanel>
+                          </PopoverPanel>
+                        </>
+                      )}
                     </Popover>
                   ))}
                   {navigation.pages.map((page) => (
-                    <a
+                    <Link
                       key={page.name}
-                      href={page.href}
+                      to={page.href}
                       className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                     >
                       {page.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </PopoverGroup>
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a
-                    href="#"
+                  <Link
+                    to="/login"
                     className="text-sm font-medium text-gray-700 hover:text-gray-800"
                   >
                     Sign in
-                  </a>
+                  </Link>
                   <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                  <a
-                    href="#"
+                  <Link
+                    to="/signup"
                     className="text-sm font-medium text-gray-700 hover:text-gray-800"
                   >
                     Create account
-                  </a>
+                  </Link>
                 </div>
-
-                
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                  <Link
+                    to="/products"
+                    className="p-2 text-gray-400 hover:text-gray-500"
+                  >
                     <span className="sr-only">Search</span>
                     <MagnifyingGlassIcon
                       aria-hidden="true"
                       className="size-6"
                     />
-                  </a>
+                  </Link>
                 </div>
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 flex items-center p-2">
+                  <Link to="/cart" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       aria-hidden="true"
                       className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
@@ -441,7 +435,7 @@ export default function Navigations() {
                       0
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

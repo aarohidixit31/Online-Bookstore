@@ -1,11 +1,11 @@
 'use client'
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import BookFilterSidebar from "./BookFilterSidebar";
 import ProductCard from "./ProductCard";
 
 const PAGE_SIZE = 12;
 
-// 40 books: covers/authors/genres real, ISBN covers from OpenLibrary or Unsplash
 const books = [
   // --- Fiction ---
   {
@@ -310,8 +310,8 @@ const applyFilters = (books, filters) => {
   return books.filter(book => {
     if (filters.title && !book.title.toLowerCase().includes(filters.title.toLowerCase())) return false;
     if (filters.author && !book.author.toLowerCase().includes(filters.author.toLowerCase())) return false;
-    if (filters.format && filters.format.length && !filters.format.some(f=>book.format.includes(f))) return false;
-    if (filters.genre && book.genre !== filters.genre) return false;
+    if (filters.format && filters.format.length && !filters.format.some(f => book.format.includes(f))) return false;
+    if (filters.genre && book.genre.toLowerCase() !== filters.genre.toLowerCase()) return false;
     if (filters.minPrice && book.price < Number(filters.minPrice)) return false;
     if (filters.maxPrice && book.price > Number(filters.maxPrice)) return false;
     if (filters.discount && !book.discount) return false;
@@ -325,12 +325,18 @@ const Product = () => {
   const [filters, setFilters] = useState({});
   const [page, setPage] = useState(1);
 
-  const filteredBooks = applyFilters(books, filters);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const genreParam = params.get("genre");
+
+  const effectiveFilters = { ...filters, genre: genreParam || filters.genre };
+
+  const filteredBooks = applyFilters(books, effectiveFilters);
   const totalPages = Math.ceil(filteredBooks.length / PAGE_SIZE);
 
-  useEffect(() => {
-    setPage(1);
-  }, [filters]);
+ useEffect(() => {
+  setPage(1);
+}, [filters, genreParam, location.search]);
 
   const paginatedBooks = filteredBooks.slice(
     (page - 1) * PAGE_SIZE,
@@ -338,12 +344,14 @@ const Product = () => {
   );
 
   return (
-    <div className="bg-surface min-h-screen flex flex-col lg:flex-row">
+    <div className="pt-16 bg-surface min-h-screen flex flex-col lg:flex-row">
       <div className="w-full lg:w-1/4 px-2 lg:px-6 pt-4 lg:pt-10 lg:mt-10">
         <BookFilterSidebar filters={filters} setFilters={setFilters} />
       </div>
       <div className="flex-1 p-4 lg:p-10 flex flex-col min-h-screen">
-        <h1 className="text-3xl font-bold mb-6 text-primary">Browse All Books</h1>
+        <h1 className="text-3xl font-bold mb-6 text-primary">
+          {genreParam ? `${genreParam} Books` : "Browse All Books"}
+        </h1>
         <div className="flex flex-wrap">
           {paginatedBooks.length > 0 ? (
             paginatedBooks.map(book => (
@@ -375,3 +383,4 @@ const Product = () => {
 };
 
 export default Product;
+
