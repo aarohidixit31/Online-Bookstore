@@ -32,8 +32,6 @@ public class Rating {
 	
 	private LocalDateTime createdAt;
 	
-	
-	
 	public Rating(Long id, User user, Product product, double rating, LocalDateTime createdAt) {
 		super();
 		this.id = id;
